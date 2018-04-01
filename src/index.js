@@ -5,7 +5,6 @@ import DashboardAddons from 'hub-dashboard-addons';
 import {Widget} from './widget/widget';
 import {Provider} from 'mobx-react';
 import './index.css';
-import 'semantic-ui-css/semantic.min.css';
 import registerServiceWorker from './registerServiceWorker';
 import {stores} from './widget/stores/index';
 

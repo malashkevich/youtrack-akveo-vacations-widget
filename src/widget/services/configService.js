@@ -31,11 +31,6 @@ class ConfigService {
           mainIssueId: mainIssueId
         });
       })
-      .then(() => {
-        this.getConfig().then(config => {
-          debugger;
-        })
-      })
   }
 }
 

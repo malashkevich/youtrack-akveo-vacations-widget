@@ -1,10 +1,9 @@
 import React from 'react';
 import {inject, observer} from 'mobx-react';
-import {Container} from 'semantic-ui-react'
-import {apiService} from './services/apiService';
-import {issueService} from './services/issueService';
+import {Spin} from 'antd';
 import {EditView} from './components/edit/editView';
-import {MainView} from './components/mainView';
+import {MainView} from './components/main/mainView';
+import {widgetStore} from './stores/widget.store';
 
 @inject('widgetStore') @observer
 export class Widget extends React.Component {
@@ -20,9 +19,14 @@ export class Widget extends React.Component {
     })
   }
 
+  componentWillMount() {
+    widgetStore.setLoading(true)
+  }
+
   componentDidMount() {
     let {dashboardApi, widgetStore} = this.props;
-    widgetStore.initWidget(dashboardApi);
+    widgetStore.initWidget(dashboardApi)
+      .finally(() => widgetStore.setLoading(false))
   }
 
   renderEdit() {
@@ -42,7 +46,8 @@ export class Widget extends React.Component {
     let content = widgetStore.configMode ? this.renderEdit() : this.renderMain();
     return (
       <div>
-        {content}
+        {widgetStore.isLoading && <Spin size='large'/>}
+        {!widgetStore.isLoading && content}
       </div>
     )
   }

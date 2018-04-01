@@ -2,6 +2,7 @@ import {observable, action, computed} from 'mobx';
 import {issueService} from '../../services/issueService';
 import {issueStore} from '../../stores/issue.store';
 import {configService} from '../../services/configService';
+import {getTitle} from '../../utils/issueUtils';
 
 class EditVM {
   @observable isLoading = false;
@@ -16,7 +17,7 @@ class EditVM {
     return issueStore.issues.map(issue => {
       return {
         id: issue.id,
-        title: issue.field.find(f => f.name === 'summary').value,
+        title: getTitle(issue),
         isMain: issueStore.mainIssueId === issue.id
       }
     })
