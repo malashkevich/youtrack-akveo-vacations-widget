@@ -3,7 +3,7 @@ import {observable, computed, action} from 'mobx';
 class IssueStore {
   @observable issues = [];
 
-  @observable mainIssue = null;
+  @observable mainIssueId = null;
 
   @action
   setIssues(issues) {
@@ -11,8 +11,8 @@ class IssueStore {
   }
 
   @action
-  setMain(issue) {
-    this.mainIssue = issue;
+  setMain(id) {
+    this.mainIssueId = id;
   }
 }
 

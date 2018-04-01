@@ -8,15 +8,16 @@ class WidgetStore {
   @observable configMode = false;
 
   @action
-  setConfigMode(value) {
+  setConfigMode(value, needCallWidgetAPI = true) {
     this.configMode = value;
-    configService.setConfigMode(value);
+    if (needCallWidgetAPI)
+      configService.setConfigMode(value);
   }
 
   initWidget(api) {
     configService.init(api);
     return apiService.init(api)
-      .then(configService.getConfig())
+      .then(() => configService.getConfig())
       .then(config => {
         if (!config) {
           console.log('No configuration yet');

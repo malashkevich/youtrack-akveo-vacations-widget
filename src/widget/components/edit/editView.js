@@ -1,6 +1,8 @@
 import React from 'react';
 import {inject, observer} from 'mobx-react';
+import {Header, Button} from 'semantic-ui-react';
 import {Loading} from '../controls/loading';
+import {IssuesTable} from './issuesTable';
 
 @inject('editVM') @observer
 export class EditView extends React.Component {
@@ -10,18 +12,26 @@ export class EditView extends React.Component {
     editVM.load();
   }
 
-  renderIssue(issue) {
-    return (
-      <p key={issue.id}>{issue.id}</p>
-    )
-  }
-
   renderEdit() {
     let {editVM} = this.props;
-    let issues = editVM.issues.map(issue => this.renderIssue(issue));
+    let disabled = !editVM.hasMainIssue;
     return (
       <div>
-        {issues}
+        <Header as='h3'>
+          Vacation settings
+          <Header.Subheader>
+            Choose your task for time logging.
+          </Header.Subheader>
+        </Header>
+        <IssuesTable
+          issues={editVM.issues}
+          onMainChange={editVM.setMainIssueId}
+        />
+        <Button
+          positive
+          compact
+          disabled={disabled}
+          onClick={() => editVM.saveMainIssue()}>Save</Button>
       </div>
     )
   }

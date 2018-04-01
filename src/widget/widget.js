@@ -1,5 +1,6 @@
 import React from 'react';
-import {inject, observer} from 'mobx-react'
+import {inject, observer} from 'mobx-react';
+import {Container} from 'semantic-ui-react'
 import {apiService} from './services/apiService';
 import {issueService} from './services/issueService';
 import {EditView} from './components/edit/editView';
@@ -24,13 +25,13 @@ export class Widget extends React.Component {
     widgetStore.initWidget(dashboardApi);
   }
 
-  renderEdit(){
-    return(
+  renderEdit() {
+    return (
       <EditView/>
     )
   }
 
-  renderMain(){
+  renderMain() {
     return (
       <MainView/>
     )
@@ -38,8 +39,11 @@ export class Widget extends React.Component {
 
   render() {
     let {widgetStore} = this.props;
-    if(widgetStore.configMode)
-      return this.renderEdit();
-    return this.renderMain();
+    let content = widgetStore.configMode ? this.renderEdit() : this.renderMain();
+    return (
+      <div>
+        {content}
+      </div>
+    )
   }
 }
