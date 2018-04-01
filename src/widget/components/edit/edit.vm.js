@@ -24,6 +24,11 @@ class EditVM {
   }
 
   @computed
+  get mainIssueId(){
+    return issueStore.mainIssueId;
+  }
+
+  @computed
   get hasMainIssue() {
     return !!issueStore.mainIssueId
   }

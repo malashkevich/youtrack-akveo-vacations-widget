@@ -1,9 +1,9 @@
 {
-  "key": "youtrack-board-status-widget",
-  "name": "Agile Board Status",
-  "version": "0.0.5",
-  "description": "Shows youtrack agile board status.",
-  "author": "Ekaterina Zaikina <katriyna@gmail.com>",
+  "key": "youtrack-akveo-vacations-widget",
+  "name": "Vacations Wizard",
+  "version": "0.1.0",
+  "description": "Helps to log vacations correctly.",
+  "author": "Alexei Malashekvich <a.malashkevich@akveo.com>",
   "applicationName": "YouTrack",
   "dependencies": {
     "YouTrack": ">=2017.4",

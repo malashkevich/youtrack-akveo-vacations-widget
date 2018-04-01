@@ -6,10 +6,8 @@ export class PreviewTable extends React.Component {
   columns = [{
     title: 'Date',
     dataIndex: 'title',
-
     render: (text, record) => this.renderAction(record)
   }];
-
 
   renderAction(item) {
     return (
@@ -23,7 +21,12 @@ export class PreviewTable extends React.Component {
 
   render() {
     return (
-      <Table pagination={false} dataSource={this.props.data} columns={this.columns}/>
+      <Table pagination={false}
+             size='small'
+             scroll={{y: 240}}
+             showHeader={false}
+             dataSource={this.props.data}
+             columns={this.columns}/>
     )
   }
 }

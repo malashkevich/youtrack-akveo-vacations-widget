@@ -44,6 +44,11 @@ class MainVM {
     this.successMessage = text;
   }
 
+  @action
+  reset() {
+    this.changeDates([])
+  }
+
   @computed
   get daysCount() {
     return this.filteredDates.length;
@@ -52,7 +57,7 @@ class MainVM {
   @computed
   get mainIssueData() {
     return {
-      text: getTitle(this.mainIssue),
+      text: `${this.mainIssue.id} ${getTitle(this.mainIssue)}`,
       href: getHref(this.mainIssue),
     }
   }
@@ -83,6 +88,14 @@ class MainVM {
     });
   }
 
+  @computed
+  get username() {
+    if (widgetStore.user) {
+      return widgetStore.user.fullName
+    }
+    return 'anonymus';
+  }
+
   load() {
     return issueService.getMainIssue()
       .then(issue => {
@@ -96,20 +109,30 @@ class MainVM {
 
   logTime() {
     this.setLoading(true);
+    let result = Promise.resolve(true);
     if (this.dates.length > 0 || !this.mainIssue) {
-      issueService.issueExists(this.mainIssue.id)
+      return result.then(() => issueService.issueExists(this.mainIssue.id))
         .then(() => {
           return issueService.logTimeForRange(this.mainIssue.id, this.filteredDates)
         })
+        .then(() => true)
         .catch(err => this.handleError(err))
-        .finally(() => {
-          this.clearData();
-          this.setSuccess('Vacations logged!');
-          this.setLoading(false)
+        .finally(isSuccess => {
+          if (isSuccess) {
+            this.clearData();
+            this.setSuccess('Vacations logged!');
+          }
+          this.setLoading(false);
+          return isSuccess;
         })
     }
-    else
-      this.setLoading(false);
+    else {
+      return result.then(() => {
+        this.setLoading(false);
+        return false;
+      })
+    }
+
   }
 
   clearData() {
@@ -119,6 +142,7 @@ class MainVM {
   handleError(err) {
     console.error(err);
     this.setError('Issue don\'t exists or other error. Please check logs.')
+    return false;
   }
 
   switchEditMode() {

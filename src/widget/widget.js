@@ -1,8 +1,8 @@
 import React from 'react';
 import {inject, observer} from 'mobx-react';
 import {Spin} from 'antd';
-import {EditView} from './components/edit/editView';
-import {MainView} from './components/main/mainView';
+import {EditComponent} from './components/edit/edit.component';
+import {MainComponent} from './components/main/main.component';
 import {widgetStore} from './stores/widget.store';
 
 @inject('widgetStore') @observer
@@ -11,10 +11,8 @@ export class Widget extends React.Component {
     super(props);
     const {registerWidgetApi} = props;
     registerWidgetApi({
-      //onConfigure: () => this.setState({isConfiguring: true}),
-      onRefresh: async () => {
-        // await this.loadSelectedSprintData();
-        // this.updateTitle();
+      onConfigure: () => {
+        widgetStore.setConfigMode(true);
       }
     })
   }
@@ -31,13 +29,13 @@ export class Widget extends React.Component {
 
   renderEdit() {
     return (
-      <EditView/>
+      <EditComponent/>
     )
   }
 
   renderMain() {
     return (
-      <MainView/>
+      <MainComponent/>
     )
   }
 
