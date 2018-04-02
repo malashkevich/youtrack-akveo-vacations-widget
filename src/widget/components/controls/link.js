@@ -5,7 +5,7 @@ export class Link extends React.Component {
   render() {
     let {text,href} = this.props;
     return(
-      <a href={href}>{text}</a>
+      <a target='_blank' href={href}>{text}</a>
     )
   }
 }
