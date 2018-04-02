@@ -2,7 +2,7 @@ import {apiService} from './apiService';
 import {issueStore} from '../stores/issue.store';
 import moment from 'moment';
 
-const GET_ISSUES_BY_ME_FILTER = 'project:%20Vacations%20and%20created%20by:%20me%20';
+const GET_ISSUES_BY_ME_FILTER = 'rest/issue/byproject/VACATIONS?max=500';
 const ISSUES_ENDPOINT = 'rest/issue';
 const ISSUE_WORKTIME_ENDPOINT = id => `rest/issue/${id}/timetracking/workitem`;
 const GET_ISSUE_BY_ID_ENDPOINT = id => `${ISSUES_ENDPOINT}/${id}`;
@@ -11,10 +11,8 @@ const ISSUE_EXISTS_ENDPOINT = id => `rest/issue/${id}/exists`;
 
 class IssueService {
   getIssuesByCurrentUser() {
-    return apiService.fetch(`${ISSUES_ENDPOINT}?${GET_ISSUES_BY_ME_FILTER}`)
-      .then(data => {
-        issueStore.setIssues(data.issue);
-      })
+    return apiService.fetch(GET_ISSUES_BY_ME_FILTER)
+      .then(data => issueStore.setIssues(data));
   }
 
   getMainIssue() {

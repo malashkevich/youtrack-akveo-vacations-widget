@@ -35,7 +35,9 @@ export class IssuesTableComponent extends React.Component {
     });
     return (
       <Table
-        pagination={false} size='small'
+        pagination={false}
+        size='small'
+        scroll={{y: 240}}
         dataSource={data} columns={this.columns}
         rowSelection={{
           selectedRowKeys: selectedKeys,

@@ -101,7 +101,10 @@ class MainVM {
       .then(issue => {
         this.setMainIssue(issue)
       })
-      .catch(err => this.handleError(err))
+      .catch(err => {
+        this.handleError(err);
+        widgetStore.setConfigMode(true)
+      })
       .finally(() => {
         this.setComponentLoading(false)
       })
